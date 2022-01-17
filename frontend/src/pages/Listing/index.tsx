@@ -1,9 +1,9 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 import MovieCard from "components/MovieCard";
 import Pagination from "components/Pagination";
-import { useEffect, useState } from "react";
-import { MoviePage } from "types/movie";
 import { BASE_URL } from "utils/requests";
+import { MoviePage } from "types/movie";
 
 function Listing() {
 
@@ -18,24 +18,16 @@ function Listing() {
         number: 0,
         first: true,
         numberOfElements: 0,
-        empty: true
+        empty: true,
     });
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/movies?size=12&page=${pageNumber}&sort=id=title`)
+        axios.get(`${BASE_URL}/movies?size=12&page=${pageNumber}`)
             .then(response => {
                 const data = response.data as MoviePage;
                 setPage(data);
             });
-    }, [])
-
-    const movie = {
-        id: 1,
-        image: "https://www.themoviedb.org/t/p/w533_and_h300_bestv2/jBJWaqoSCiARWtfV0GlqHrcdidd.jpg",
-        title: "The Witcher",
-        count: 2,
-        score: 4.5
-    };
+    }, [pageNumber]);
 
     return (
         <>
